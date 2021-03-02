@@ -47,6 +47,37 @@ entity project_reti_logiche is
 end project_reti_logiche;
 
 architecture Behavioral of project_reti_logiche is
+
+component DataPath is
+    Port 
+    (    
+    i_clk : in std_logic;
+    i_rst : in std_logic;
+    i_data : in std_logic_vector(7 downto 0);
+    o_address : out std_logic_vector(15 downto 0);
+    o_data : out std_logic_vector (7 downto 0);
+    r_sel:  in std_logic;
+    r_load: in std_logic;
+    r_done: out std_logic;
+    rmax_load: in std_logic;
+    c_sel: in std_logic;
+    c_load: in std_logic; 
+    c_done: out std_logic; 
+    cmax_load: in std_logic; 
+    a_sel: in std_logic; 
+    a_load: in std_logic;
+    e_load: in std_logic; 
+    o_sel: in std_logic_vector(1 downto 0); 
+    bool_end: out std_logic; 
+    a_sel2: in std_logic;
+    a_load2: in std_logic;
+    p_load: in std_logic; 
+    init: in std_logic;
+    s_load: in std_logic;
+    old_load: in std_logic
+    );
+end component;
+
 signal r_sel: std_logic;
 signal r_load: std_logic;
 signal r_done: std_logic;
@@ -71,6 +102,34 @@ type S is (S0, S1, S2, Si, Si2, S3, Sg, S4, S5, S6, S7, S8);
 signal cur_state, next_state : S;
 
 begin
+
+    DATAPATH0: DataPath port map
+    (    
+    i_clk ,
+    i_rst ,
+    i_data,
+    o_address,
+    o_data ,
+    r_sel,
+    r_load,
+    r_done,
+    rmax_load,
+    c_sel,
+    c_load, 
+    c_done, 
+    cmax_load, 
+    a_sel, 
+    a_load,
+    e_load, 
+    o_sel, 
+    bool_end, 
+    a_sel2,
+    a_load2,
+    p_load, 
+    init,
+    s_load,
+    old_load
+    );
 
     process(i_clk, i_rst)
     begin
@@ -216,6 +275,7 @@ end Behavioral;
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use ieee.numeric_std.all;
 
 entity DataPath is
   Port 
@@ -447,7 +507,7 @@ begin
     
     sub_delta <= max - min;
     log_in <= '0' & sub_delta  + "000000001";
-    log_out <= "0000" when log_in = "000000001" else
+    log_out <= "0000" when log_in = "000000001" else           -- LOGARITHM
                "0001" when log_in = "000000010" or log_in = "000000011" else
                "0010" when log_in >= "000000100" and log_in <= "000000111" else
                "0011" when log_in >= "000001000" and log_in <= "000001111" else 
@@ -481,6 +541,7 @@ begin
     end process;
     
     sub_old <= old - min;
+    shifted <= std_logic_vector(shift_left(unsigned(sub_old), to_integer(unsigned(shift_level)))); --Shifter--
     sel_pixel <= '1' when (shifted < "0000000011111111") else '0';
     
     with sel_pixel select

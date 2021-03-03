@@ -98,7 +98,7 @@ signal init: std_logic;
 signal s_load: std_logic;
 signal old_load: std_logic;
 
-type S is (S0, S1, S2, Si, Si2, S3, Sg, S4, S5, S6, S7, S8);
+type S is (S0, S1, S2, Si, Si2, Si3, S3, Sg, S4, S5, S6, S7, S8);
 signal cur_state, next_state : S;
 
 begin
@@ -155,6 +155,8 @@ begin
              when Si =>
                 next_state <= Si2;
              when Si2 =>
+                next_state <= Si3;
+             when Si3 =>
                 next_state <= S3;
              when S3 =>
                 if c_done = '0' then
@@ -217,12 +219,13 @@ begin
             when S0 =>
             when S1 =>
                 o_en <= '1';
-                cmax_load <= '1';
+                --cmax_load <= '1';
                 o_sel <= "10";
             when S2 =>
+                cmax_load <= '1'; -- MODIFICA
                 o_sel <= "11";
                 o_en <= '1';
-                rmax_load <= '1';
+                --rmax_load <= '1';
                 a_sel <= '0';
                 a_load <= '1';
                 r_sel <= '0';
@@ -230,17 +233,25 @@ begin
                 c_sel <= '0';
                 c_load <= '0';   
             when Si =>
+                rmax_load <= '1'; --MODIFICA
                 o_en <= '1';
-                p_load <= '1';
+                --p_load <= '1';
             when Si2 =>
+                p_load <= '1';
+                --init <= '1';
+            when Si3 =>
                 init <= '1';
+                o_en <= '1';
+                c_sel <= '1';
+                c_load <= '1';
             when S3 =>
                 c_sel <= '1';
                 c_load <= '1';
                 a_sel <= '1';
                 a_load <= '1';
+                p_load <= '1'; -- MODIFICA
             when Sg =>
-                p_load <= '1';
+                --p_load <= '1'; 
                 o_en <= '1';
             when S4 =>
                 r_sel <= '1';
@@ -541,7 +552,7 @@ begin
     end process;
     
     sub_old <= old - min;
-    shifted <= std_logic_vector(shift_left(unsigned(sub_old), to_integer(unsigned(shift_level)))); --Shifter--
+    shifted <= std_logic_vector(shift_left(unsigned("00000000" & sub_old), to_integer(unsigned(shift_level)))); --Shifter--
     sel_pixel <= '1' when (shifted < "0000000011111111") else '0';
     
     with sel_pixel select

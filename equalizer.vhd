@@ -98,7 +98,7 @@ signal init: std_logic;
 signal s_load: std_logic;
 signal old_load: std_logic;
 
-type S is (S0, S1, S2, Si, Si2, Si3, S3, Sg, S4, S5, S6, S7, S8);
+type S is (S0, S1, S2, Si, Si2, Si3, S3, Sg, S4, S5, S6, S7, S8, S9, S10);
 signal cur_state, next_state : S;
 
 begin
@@ -178,11 +178,15 @@ begin
                 if bool_end = '0' then
                     next_state <= S7;
                 else 
-                    next_state <= S8;
+                    next_state <= S10;
                 end if;
              when S7 =>
-                next_state <= S6;
+                next_state <= S8;
              when S8 =>
+                next_state <= S9;
+             when S9 =>
+                next_state <= S6;
+             when S10 =>
                 if i_start = '0' then 
                     next_state <= S0;
                 end if;            
@@ -213,7 +217,7 @@ begin
         --o_address <= "0000000000000000";
         o_en <= '0';
         o_we <= '0';
-        o_data <= "00000000";
+        --o_data <= "00000000";
         o_done <= '0';
         case cur_state is
             when S0 =>
@@ -263,20 +267,23 @@ begin
                 e_load <= '1';
                 a_sel2 <= '0';
                 a_load2 <= '1';
-                o_sel <= "01"; ----BLU ?????
+                --o_sel <= "01"; ----BLU ?????
             when S6 =>
                 o_en <= '1';
-                old_load <= '1';
-                o_sel <= "00"; ----- BLUU ???
+                --old_load <= '1';
+                o_sel <= "01"; ----- BLUU ???
             when S7 =>
+                old_load <= '1';
+            when S8 =>
+            when S9 =>
                 o_en <= '1';
                 o_we <= '1';
                 a_sel <= '1';
                 a_load <= '1';
                 a_sel2 <= '1';
                 a_load2 <= '1';
-                o_sel <= "01"; -----BLU ???
-            when S8 =>
+                o_sel <= "00"; -----BLU ???
+            when S10 =>
                 o_done <= '1';     
         end case;
     end process;   

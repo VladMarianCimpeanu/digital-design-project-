@@ -231,7 +231,7 @@ begin
                 r_sel <= '0';
                 r_load <= '1';
                 c_sel <= '0';
-                c_load <= '0';   
+                c_load <= '1';   
             when Si =>
                 rmax_load <= '1'; --MODIFICA
                 o_en <= '1';
@@ -242,8 +242,8 @@ begin
             when Si3 =>
                 init <= '1';
                 o_en <= '1';
-                c_sel <= '1';
-                c_load <= '1';
+                --c_sel <= '1';    SBAGLIATO BLU
+                --c_load <= '1';   SBAGLIATO BLU
             when S3 =>
                 c_sel <= '1';
                 c_load <= '1';
@@ -524,7 +524,8 @@ begin
                "0011" when log_in >= "000001000" and log_in <= "000001111" else 
                "0100" when log_in >= "000010000" and log_in <= "000011111" else
                "0101" when log_in >= "000100000" and log_in <= "000111111" else
-               "0111" when log_in >= "001000000" and log_in <= "001111111" else
+               "0110" when log_in >= "001000000" and log_in <= "001111111" else
+               "0111" when log_in >= "010000000" and log_in <= "011111111" else
                "1000" when log_in >= "010000000" else 
                "XXXX";
     sub_shift <= "1000" - log_out;

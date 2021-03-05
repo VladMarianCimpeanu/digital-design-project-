@@ -60,10 +60,12 @@ component DataPath is
     r_load: in std_logic;
     r_done: out std_logic;
     rmax_load: in std_logic;
+    row_zero: out std_logic;
     c_sel: in std_logic;
     c_load: in std_logic; 
     c_done: out std_logic; 
-    cmax_load: in std_logic; 
+    cmax_load: in std_logic;
+    column_zero: out std_logic; 
     a_sel: in std_logic; 
     a_load: in std_logic;
     e_load: in std_logic; 
@@ -82,10 +84,12 @@ signal r_sel: std_logic;
 signal r_load: std_logic;
 signal r_done: std_logic;
 signal rmax_load: std_logic;
+signal row_zero: std_logic;
 signal c_sel: std_logic;
 signal c_load: std_logic; 
 signal c_done: std_logic; 
-signal cmax_load: std_logic; 
+signal cmax_load: std_logic;
+signal column_zero: std_logic; 
 signal a_sel: std_logic; 
 signal a_load: std_logic;
 signal e_load: std_logic; 
@@ -114,10 +118,12 @@ begin
     r_load,
     r_done,
     rmax_load,
+    row_zero,
     c_sel,
     c_load, 
     c_done, 
-    cmax_load, 
+    cmax_load,
+    column_zero, 
     a_sel, 
     a_load,
     e_load, 
@@ -140,7 +146,7 @@ begin
         end if;
     end process;
     
-    process(cur_state, i_start, c_done, r_done, bool_end)
+    process(cur_state, i_start, c_done, r_done, bool_end, row_zero, column_zero)
     begin
         next_state <= cur_state;
         case cur_state is    
@@ -157,7 +163,11 @@ begin
              when Si2 =>
                 next_state <= Si3;
              when Si3 =>
-                next_state <= S3;
+                if column_zero = '1' or row_zero = '1' then
+                    next_state <= S10;
+                else
+                    next_state <= S3;
+                end if;
              when S3 =>
                 if c_done = '0' then
                     next_state <= Sg;
@@ -307,10 +317,12 @@ entity DataPath is
     r_load: in std_logic;
     r_done: out std_logic;
     rmax_load: in std_logic;
+    row_zero: out std_logic; --- MMMM
     c_sel: in std_logic;
     c_load: in std_logic; 
     c_done: out std_logic; 
-    cmax_load: in std_logic; 
+    cmax_load: in std_logic;
+    column_zero: out std_logic; --- MMMM
     a_sel: in std_logic; 
     a_load: in std_logic;
     e_load: in std_logic; 
@@ -377,8 +389,8 @@ begin
     end process;
     
     sum_row <= row + "00000001";
-    
     r_done <= '1' when (row = row_max) else '0';
+    row_zero <= '1' when (row_max = "00000000") else '0';
     
     process(i_clk, i_rst)
         begin
@@ -411,6 +423,7 @@ begin
     
     sum_column <= column + "00000001"; 
     c_done <= '1' when (column = column_max) else '0';
+    column_zero <= '1' when (column_max = "00000000") else '0';
     
     process(i_clk, i_rst)
         begin

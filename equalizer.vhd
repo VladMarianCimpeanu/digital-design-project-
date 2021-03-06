@@ -18,20 +18,12 @@
 -- 
 ----------------------------------------------------------------------------------
 
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity project_reti_logiche is
+  
   Port 
   (
     i_clk : in std_logic;
@@ -146,6 +138,8 @@ begin
         end if;
     end process;
     
+    --  NEXT STATE FUNCTION FSM  --
+    
     process(cur_state, i_start, c_done, r_done, bool_end, row_zero, column_zero)
     begin
         next_state <= cur_state;
@@ -203,43 +197,38 @@ begin
         end case;
     end process;
     
+    --  OUTPUT FUNCTION FSM  --
+          
     process(cur_state)
     begin
         r_sel <= '1';
         r_load <= '0';
-        --r_done <= '';
         rmax_load <= '0';
         c_sel <= '1';
         c_load <= '0';
-        --c_done <= 
         cmax_load <= '0';
         a_sel <= '1';
         a_load <= '0';
         e_load <= '0';
         o_sel <= "00";
-        --bool_end <= '';
         a_sel2 <= '1';
         a_load2 <= '0';
         p_load <= '0';
         init <= '0';
         s_load <= '0';
         old_load <= '0';
-        --o_address <= "0000000000000000";
         o_en <= '0';
         o_we <= '0';
-        --o_data <= "00000000";
         o_done <= '0';
         case cur_state is
             when S0 =>
             when S1 =>
                 o_en <= '1';
-                --cmax_load <= '1';
                 o_sel <= "10";
             when S2 =>
-                cmax_load <= '1'; -- MODIFICA
+                cmax_load <= '1';
                 o_sel <= "11";
                 o_en <= '1';
-                --rmax_load <= '1';
                 a_sel <= '0';
                 a_load <= '1';
                 r_sel <= '0';
@@ -247,25 +236,20 @@ begin
                 c_sel <= '0';
                 c_load <= '1';   
             when S3 =>
-                rmax_load <= '1'; --MODIFICA
+                rmax_load <= '1'; 
                 o_en <= '1';
-                --p_load <= '1';
             when S4 =>
                 p_load <= '1';
-                --init <= '1';
             when S5 =>
                 init <= '1';
                 o_en <= '1';
-                --c_sel <= '1';    SBAGLIATO BLU
-                --c_load <= '1';   SBAGLIATO BLU
             when S6 =>
                 c_sel <= '1';
                 c_load <= '1';
                 a_sel <= '1';
                 a_load <= '1';
-                p_load <= '1'; -- MODIFICA
+                p_load <= '1'; 
             when S7 =>
-                --p_load <= '1'; 
                 o_en <= '1';
             when S8 =>
                 r_sel <= '1';
@@ -277,11 +261,9 @@ begin
                 e_load <= '1';
                 a_sel2 <= '0';
                 a_load2 <= '1';
-                --o_sel <= "01"; ----BLU ?????
             when S10 =>
                 o_en <= '1';
-                --old_load <= '1';
-                o_sel <= "01"; ----- BLUU ???
+                o_sel <= "01";
             when S11 =>
                 old_load <= '1';
             when S12 =>
@@ -292,7 +274,7 @@ begin
                 a_load <= '1';
                 a_sel2 <= '1';
                 a_load2 <= '1';
-                o_sel <= "00"; -----BLU ???
+                o_sel <= "00";
             when S14 =>
                 o_done <= '1';     
         end case;
@@ -317,12 +299,12 @@ entity DataPath is
     r_load: in std_logic;
     r_done: out std_logic;
     rmax_load: in std_logic;
-    row_zero: out std_logic; --- MMMM
+    row_zero: out std_logic; 
     c_sel: in std_logic;
     c_load: in std_logic; 
     c_done: out std_logic; 
     cmax_load: in std_logic;
-    column_zero: out std_logic; --- MMMM
+    column_zero: out std_logic; 
     a_sel: in std_logic; 
     a_load: in std_logic;
     e_load: in std_logic; 
@@ -361,9 +343,9 @@ signal bool_min: std_logic;
 signal max_load: std_logic;
 signal min_load: std_logic;
 signal sub_delta: std_logic_vector(7 downto 0);
-signal log_in: std_logic_vector(8 downto 0);         --- 9 o 8????
-signal log_out: std_logic_vector(3 downto 0);        --- 4 o 3??????
-signal sub_shift: std_logic_vector(3 downto 0);      --- 4 o 3???????
+signal log_in: std_logic_vector(8 downto 0);     
+signal log_out: std_logic_vector(3 downto 0);      
+signal sub_shift: std_logic_vector(3 downto 0);     
 signal shift_level: std_logic_vector(3 downto 0);
 signal old: std_logic_vector(7 downto 0);
 signal sub_old: std_logic_vector(7 downto 0);
@@ -371,7 +353,9 @@ signal shifted: std_logic_vector(15 downto 0);
 signal sel_pixel: std_logic;
 
 begin
+  
     -- ROW COUNTER MODULE --
+  
     with r_sel select
     mux_row <= "00000001" when '0',
                sum_row when '1',
@@ -573,7 +557,7 @@ begin
     end process;
     
     sub_old <= old - min;
-    shifted <= std_logic_vector(shift_left(unsigned("00000000" & sub_old), to_integer(unsigned(shift_level)))); --Shifter--
+    shifted <= std_logic_vector(shift_left(unsigned("00000000" & sub_old), to_integer(unsigned(shift_level)))); --SHIFTER
     sel_pixel <= '1' when (shifted < "0000000011111111") else '0';
     
     with sel_pixel select

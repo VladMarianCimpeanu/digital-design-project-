@@ -1,0 +1,110 @@
+\documentclass[12pt]{article}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (5.9,-5.6) circle (2.4);
+\draw (5.9,-5.6) node {$S_0$};
+\draw [black] (25.7,-5.7) circle (2.4);
+\draw (25.7,-5.7) node {$S_1$};
+\draw [black] (43.2,-5.7) circle (2.4);
+\draw (43.2,-5.7) node {$S_2$};
+\draw [black] (59.7,-5.7) circle (2.4);
+\draw (59.7,-5.7) node {$S_3$};
+\draw (25.7,-9.5) node {$Testo\mbox{ }t$};
+\draw (43.2,-9.5) node {$t$};
+\draw [black] (76.2,-5.7) circle (2.4);
+\draw (76.2,-5.7) node {$S_4$};
+\draw (59.7,-9.5) node {$t$};
+\draw (76.2,-9.5) node {$t$};
+\draw [black] (29.5,-25.6) circle (2.4);
+\draw (29.5,-25.6) node {$S_5$};
+\draw [black] (61.8,-25.6) circle (2.4);
+\draw (61.8,-25.6) node {$S_6$};
+\draw [black] (78.7,-25.6) circle (2.4);
+\draw (78.7,-25.6) node {$S_7$};
+\draw [black] (70.1,-41.4) circle (2.4);
+\draw (70.1,-41.4) node {$S_8$};
+\draw [black] (25.7,-41.4) circle (2.4);
+\draw (25.7,-41.4) node {$S_9$};
+\draw [black] (5.9,-58.8) circle (2.4);
+\draw (5.9,-58.8) node {$S_10$};
+\draw [black] (29.5,-58.8) circle (2.4);
+\draw (29.5,-58.8) node {$S_11$};
+\draw [black] (51.3,-58.8) circle (2.4);
+\draw (51.3,-58.8) node {$S_12$};
+\draw [black] (73.6,-58.8) circle (2.4);
+\draw (73.6,-58.8) node {$S_13$};
+\draw [black] (5.9,-25.6) circle (2.4);
+\draw (5.9,-25.6) node {$S_14$};
+\draw (5.9,-29.4) node {$Testo\mbox{ }t$};
+\draw (29.5,-29.4) node {$T$};
+\draw (61.8,-29.4) node {$T$};
+\draw (78,-29.4) node {$T$};
+\draw (70.1,-45.6) node {$T$};
+\draw (25.7,-45.6) node {$T$};
+\draw (29.5,-54.7) node {$T$};
+\draw (51.3,-54.7) node {$T$};
+\draw (73.6,-54.7) node {$T$};
+\draw (5.9,-54.7) node {$T$};
+\draw (17.4,-22.3) node {$row\mbox{ }zero=1\mbox{ }or$};
+\draw (46,-22.3) node {$row\mbox{ }zero=0\mbox{ }and$};
+\draw [black] (8.3,-5.61) -- (23.3,-5.69);
+\fill [black] (23.3,-5.69) -- (22.5,-5.18) -- (22.5,-6.18);
+\draw (15.8,-5.13) node [above] {$i\mbox{ }start=1$};
+\draw [black] (0.2,-5.6) -- (3.5,-5.6);
+\fill [black] (3.5,-5.6) -- (2.7,-5.1) -- (2.7,-6.1);
+\draw [black] (4.842,-3.456) arc (234:-54:1.8);
+\draw (5.9,0.3) node [above] {$i\mbox{ }start=0$};
+\fill [black] (6.96,-3.46) -- (7.83,-3.1) -- (7.02,-2.52);
+\draw [black] (28.1,-5.7) -- (40.8,-5.7);
+\fill [black] (40.8,-5.7) -- (40,-5.2) -- (40,-6.2);
+\draw [black] (45.6,-5.7) -- (57.3,-5.7);
+\fill [black] (57.3,-5.7) -- (56.5,-5.2) -- (56.5,-6.2);
+\draw [black] (62.1,-5.7) -- (73.8,-5.7);
+\fill [black] (73.8,-5.7) -- (73,-5.2) -- (73,-6.2);
+\draw [black] (73.99,-6.64) -- (31.71,-24.66);
+\fill [black] (31.71,-24.66) -- (32.64,-24.81) -- (32.25,-23.89);
+\draw [black] (31.9,-25.6) -- (59.4,-25.6);
+\fill [black] (59.4,-25.6) -- (58.6,-25.1) -- (58.6,-26.1);
+\draw (45.65,-25.1) node [above] {$column\mbox{ }zero=0$};
+\draw [black] (27.1,-25.6) -- (8.3,-25.6);
+\fill [black] (8.3,-25.6) -- (9.1,-26.1) -- (9.1,-25.1);
+\draw (17.7,-25.1) node [above] {$column\mbox{ }zero=1$};
+\draw [black] (63.861,-24.375) arc (116.00819:63.99181:14.571);
+\fill [black] (76.64,-24.38) -- (76.14,-23.57) -- (75.7,-24.47);
+\draw (70.25,-22.4) node [above] {$c\mbox{ }done=0$};
+\draw [black] (76.573,-26.706) arc (-66.80792:-113.19208:16.055);
+\fill [black] (63.93,-26.71) -- (64.47,-27.48) -- (64.86,-26.56);
+\draw [black] (62.92,-27.72) -- (68.98,-39.28);
+\fill [black] (68.98,-39.28) -- (69.05,-38.33) -- (68.17,-38.8);
+\draw (65.27,-34.65) node [left] {$c\mbox{ }done=1$};
+\draw [black] (71.25,-39.29) -- (77.55,-27.71);
+\fill [black] (77.55,-27.71) -- (76.73,-28.17) -- (77.61,-28.65);
+\draw (75.07,-34.68) node [right] {$r\mbox{ }done=0$};
+\draw [black] (67.7,-41.4) -- (28.1,-41.4);
+\fill [black] (28.1,-41.4) -- (28.9,-41.9) -- (28.9,-40.9);
+\draw (47.9,-40.9) node [above] {$r\mbox{ }done=1$};
+\draw [black] (23.9,-42.98) -- (7.7,-57.22);
+\fill [black] (7.7,-57.22) -- (8.63,-57.06) -- (7.97,-56.31);
+\draw [black] (8.3,-58.8) -- (27.1,-58.8);
+\fill [black] (27.1,-58.8) -- (26.3,-58.3) -- (26.3,-59.3);
+\draw (17.7,-58.3) node [above] {$bool\mbox{ }end=0$};
+\draw [black] (31.9,-58.8) -- (48.9,-58.8);
+\fill [black] (48.9,-58.8) -- (48.1,-58.3) -- (48.1,-59.3);
+\draw [black] (53.7,-58.8) -- (71.2,-58.8);
+\fill [black] (71.2,-58.8) -- (70.4,-58.3) -- (70.4,-59.3);
+\draw [black] (8.126,-57.903) arc (111.17339:68.82661:87.555);
+\fill [black] (8.13,-57.9) -- (9.05,-58.08) -- (8.69,-57.15);
+\draw [black] (5.9,-23.2) -- (5.9,-8);
+\fill [black] (5.9,-8) -- (5.4,-8.8) -- (6.4,-8.8);
+\draw [black] (5.9,-56.4) -- (5.9,-30.8);
+\fill [black] (5.9,-30.8) -- (5.4,-31.6) -- (6.4,-31.6);
+\draw (6.4,-43.6) node [right] {$bool\mbox{ }end=1$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

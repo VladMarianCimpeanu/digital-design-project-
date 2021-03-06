@@ -1,8 +1,8 @@
 ----------------------------------------------------------------------------------
 -- Company: 
--- Engineer: 
+-- Engineers: Vlad Marian Cimpeanu | Danilo Castiglia
 -- 
--- Create Date: 01.03.2021 18:40:57
+-- Create Date: 01.02.2021 18:40:57
 -- Design Name: 
 -- Module Name: project_reti_logiche - Behavioral
 -- Project Name: 
@@ -102,7 +102,7 @@ signal init: std_logic;
 signal s_load: std_logic;
 signal old_load: std_logic;
 
-type S is (S0, S1, S2, Si, Si2, Si3, S3, Sg, S4, S5, S6, S7, S8, S9, S10);
+type S is (S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14);
 signal cur_state, next_state : S;
 
 begin
@@ -157,46 +157,46 @@ begin
              when S1 =>
                 next_state <= S2;
              when S2 =>
-                next_state <= Si;
-             when Si =>
-                next_state <= Si2;
-             when Si2 =>
-                next_state <= Si3;
-             when Si3 =>
-                if column_zero = '1' or row_zero = '1' then
-                    next_state <= S10;
-                else
-                    next_state <= S3;
-                end if;
-             when S3 =>
-                if c_done = '0' then
-                    next_state <= Sg;
-                else
-                    next_state <= S4;
-                end if;
-             when Sg =>
                 next_state <= S3;
+             when S3 =>
+                next_state <= S4;
              when S4 =>
-                if r_done = '0' then
-                    next_state <= Sg;
-                else
-                    next_state <= S5;
-                end if;
+                next_state <= S5;
              when S5 =>
-                next_state <= S6;
+                if column_zero = '1' or row_zero = '1' then
+                    next_state <= S14;
+                else
+                    next_state <= S6;
+                end if;
              when S6 =>
-                if bool_end = '0' then
+                if c_done = '0' then
                     next_state <= S7;
-                else 
-                    next_state <= S10;
+                else
+                    next_state <= S8;
                 end if;
              when S7 =>
-                next_state <= S8;
-             when S8 =>
-                next_state <= S9;
-             when S9 =>
                 next_state <= S6;
+             when S8 =>
+                if r_done = '0' then
+                    next_state <= S7;
+                else
+                    next_state <= S9;
+                end if;
+             when S9 =>
+                next_state <= S10;
              when S10 =>
+                if bool_end = '0' then
+                    next_state <= S11;
+                else 
+                    next_state <= S14;
+                end if;
+             when S11 =>
+                next_state <= S12;
+             when S12 =>
+                next_state <= S13;
+             when S13 =>
+                next_state <= S10;
+             when S14 =>
                 if i_start = '0' then 
                     next_state <= S0;
                 end if;            
@@ -246,46 +246,46 @@ begin
                 r_load <= '1';
                 c_sel <= '0';
                 c_load <= '1';   
-            when Si =>
+            when S3 =>
                 rmax_load <= '1'; --MODIFICA
                 o_en <= '1';
                 --p_load <= '1';
-            when Si2 =>
+            when S4 =>
                 p_load <= '1';
                 --init <= '1';
-            when Si3 =>
+            when S5 =>
                 init <= '1';
                 o_en <= '1';
                 --c_sel <= '1';    SBAGLIATO BLU
                 --c_load <= '1';   SBAGLIATO BLU
-            when S3 =>
+            when S6 =>
                 c_sel <= '1';
                 c_load <= '1';
                 a_sel <= '1';
                 a_load <= '1';
                 p_load <= '1'; -- MODIFICA
-            when Sg =>
+            when S7 =>
                 --p_load <= '1'; 
                 o_en <= '1';
-            when S4 =>
+            when S8 =>
                 r_sel <= '1';
                 r_load <= '1';
                 c_sel <= '0';
                 c_load <= '1';
-            when S5 =>
+            when S9 =>
                 s_load <= '1';
                 e_load <= '1';
                 a_sel2 <= '0';
                 a_load2 <= '1';
                 --o_sel <= "01"; ----BLU ?????
-            when S6 =>
+            when S10 =>
                 o_en <= '1';
                 --old_load <= '1';
                 o_sel <= "01"; ----- BLUU ???
-            when S7 =>
+            when S11 =>
                 old_load <= '1';
-            when S8 =>
-            when S9 =>
+            when S12 =>
+            when S13 =>
                 o_en <= '1';
                 o_we <= '1';
                 a_sel <= '1';
@@ -293,7 +293,7 @@ begin
                 a_sel2 <= '1';
                 a_load2 <= '1';
                 o_sel <= "00"; -----BLU ???
-            when S10 =>
+            when S14 =>
                 o_done <= '1';     
         end case;
     end process;   

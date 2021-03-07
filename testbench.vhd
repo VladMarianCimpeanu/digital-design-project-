@@ -90,7 +90,7 @@ begin
   end process;
 
   test : process is
-    file output_file                    : text open write_mode is "DIRECTORY\output_testbench.txt";
+    file output_file                    : text open write_mode is "DIRECTORY\output_testbench.txt"; -- <<<<<<<<<<<-------------------------------- CAMBIARE
     variable output_line                : line;
     variable count                      : integer := 0;
     variable passed                     : boolean := true;

@@ -60,7 +60,7 @@ begin
   end process p_CLK_GEN;
 
   MEM : process (tb_clk)
-    file read_file     : text open read_mode is "DIRECTORY\ram.txt"; --<<<<<<<<<<<<<<<<--------------------------------- QUI DA CAMBIARE
+    file read_file     : text open read_mode is "DIRECTORY\input.txt"; --<<<<<<<<<<<<<<<<--------------------------------- QUI DA CAMBIARE
     variable read_line : line;
     variable R         : ram_type;
     variable handler   : integer;

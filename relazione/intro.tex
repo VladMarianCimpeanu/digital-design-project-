@@ -1,0 +1,17 @@
+Lo scopo di questo progetto è di programmare una FPGA al fine di equalizzare delle immagini date in ingresso. Queste ultime sono memorizzate in una memoria ram di tipo sincrono.\\
+Le immagini sono in bianco e nero e ogni pixel assume valori da 0 a 255, dove 0 corrisponde al colore nero e 255 al colore bianco. La dimensione massima di ciascuna immagine è di 128 pixel in larghezza e 128 pixel in altezza, per un peso totale di 16KB.\\
+Il modulo progettato, si aspetta di trovare in memoria nei primi due indirizzi la dimensione rispettivamente di larghezza e altezza, seguite da tutti i pixel dell'immagine, riga per riga. Data l'immagine in ingresso, il componente effettua alcune semplici operazioni e restituisce l'immagine aumentandone il contrasto. La tecnica che viene utilizzata è l'\textbf{equalizzazione dell'istogramma}, che consiste nello spalmare i valori di intensità dell'immagine su tutto l'intervallo  (da 0 a 255).\\
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{pre}
+    \caption{Pre}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{post}
+    \caption{Post}
+  \end{subfigure}
+  \caption{The same image. Pre e post.}
+  \label{fig:coffee}
+\end{figure}

@@ -4,8 +4,8 @@ Il modulo Row \& Column counter è stato ideato con lo scopo di riconoscere la f
 Memorizzando le dimensioni di larghezza e altezza nei rispettivi registri e utilizzando dei contatori che tengono traccia delle righe e delle colonne per riga già lette è possibile parallelizzare la ricerca della fine dell'immagine con la lettura della stessa.\\
 Così facendo si va a ricreare quello che in programmazione è definito come nested loop:
 
-\begin{lstlisting}[language=Python, caption={nested loop in pseudocode},captionpos=b]
-address = 0
+\begin{lstlisting}[language=Python, caption={Nested loop in pseudocodice.},captionpos=b]
+address = 2
 for column in range(column_max):
     for row in range(row_max):
         address += 1
@@ -18,13 +18,14 @@ Per migliorare l'efficienza del componente, si è scelto di verificare che le di
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{rows_counter.png}%######ROWS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
-\caption{rappresentazione schematica del contatore di righe}
+\caption{Rappresentazione schematica del contatore di righe.}
 \end{figure}
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{columns_counter.png} %######COLUMNS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
-\caption{rappresentazione schematica del contatore di colonne}
+\caption{Rappresentazione schematica del contatore di colonne.}
 \end{figure}
+
 \paragraph{Address Counter\\}
 
 Il modulo Address Counter è stato sviluppato per richiedere gli indirizzi alla RAM, sia in fase di lettura che in fase di scrittura.\\
@@ -42,28 +43,24 @@ Durante la fase di scrittura i valori di address register e address2 register ve
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{final_address_calculator_module.png}%######final_address_calculator_module.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
-\caption{rappresentazione schematica dell'Address Counter}
+\caption{Rappresentazione schematica dell'Address Counter.}
 \end{figure}
 
 
-\paragraph{Max \& Min calculator.\\}
+\paragraph{Max \& Min calculator\\}
 
-Questo modulo permette di trovare i valori massimo e minimo dei pixel presenti nell'immagine.
-
-Il funzionamento del modulo è semplice. Vengono impiegati due registri: MAX e MIN, nei quali alla fine del calcolo saranno presenti rispettivamente il valore massimo e minimo dei pixel dell'immagine.
-
-Inizialmente,(con l'ausilio del segnale "init") viene caricato nei registri MAX e MIN il valore del primo pixel dell'immagine. Successivamente, per ogni altro pixel dell'immagine, lo si confronta con i valori contenuti nel registro MAX e MIN e, se il valore del pixel è maggiore del massimo (contenuto in MAX) o minore del minimo (contenuto in MIN), si aggiornano i valori nei due registri.
-
+Questo modulo permette di trovare i valori massimo e minimo dei pixel presenti nell'immagine.\\
+Il funzionamento del modulo è semplice. Vengono impiegati due registri: MAX e MIN, nei quali alla fine del calcolo saranno presenti rispettivamente il valore massimo e minimo dei pixel dell'immagine.\\
+Inizialmente,(con l'ausilio del segnale "init") viene caricato nei registri MAX e MIN il valore del primo pixel dell'immagine. Successivamente, per ogni altro pixel dell'immagine, lo si confronta con i valori contenuti nel registro MAX e MIN e, se il valore del pixel è maggiore del massimo (contenuto in MAX) o minore del minimo (contenuto in MIN), si aggiornano i valori nei due registri.\\
 Il calcolo termina dopo aver letto e processato l'ultimo pixel dell'immagine.
 
 \begin{figure}[h!] %%%%     H al posto di h! se dà problemi      %%%%%
   \includegraphics[width=\linewidth]{max_min_module}
-  \caption{Max \& Min calculator module.}
+  \caption{Rappresentazione schematica del modulo Max \& Min.}
   \label{fig:maxMin}
 \end{figure}
 
 \paragraph{New pixel value\\}
-
 Questo modulo è il cuore dell'algoritmo di equalizzazione di immagini, calcola le seguenti funzioni:
 \doublespacing
 \singlespacing
@@ -71,15 +68,13 @@ DELTA\_VALUE = MAX\_PIXEL\_VALUE – MIN\_PIXEL\_VALUE
 
 SHIFT\_LEVEL = (8 – FLOOR(LOG2(DELTA\_VALUE +1)))
 
-TEMP\_PIXEL = (CURRENT\_PIXEL\_VALUE - MIN\_PIXEL\_VALUE) \textless\textless  SHIFT\_LEVEL
+TEMP\_PIXEL = (CURRENT\_PIXEL\_VALUE - MIN\_PIXEL\_VALUE) \textless\textless SHIFT\_LEVEL
 
 NEW\_PIXEL\_VALUE = MIN( 255 , TEMP\_PIXEL)
 \doublespacing
 \singlespacing
-Si presti particolare attenzione al fatto che DELTA\_VALUE assume valori compresi tra 0 e 255, perciò bastano 8 bit per rappresentarlo. Al contrario, DELTA\_VALUE + 1 necessiterà di 9 bit per essere correttamente rappresentato.
-
-L'uscita del logaritmo sarà di 4 bit, poichè i valori da rappresentare sono compresi tra 0 e 8.
-
+Si presti particolare attenzione al fatto che DELTA\_VALUE assume valori compresi tra 0 e 255, perciò bastano 8 bit per rappresentarlo. Al contrario, DELTA\_VALUE + 1 necessiterà di 9 bit per essere correttamente rappresentato.\\
+L'uscita del logaritmo sarà di 4 bit, poichè i valori da rappresentare sono compresi tra 0 e 8.\\
 La funzione FLOOR(LOG2()) è stata implementata in maniera combinatoria con controlli a soglia:
 
 \begin{table}[h!]
@@ -101,11 +96,11 @@ La funzione FLOOR(LOG2()) è stata implementata in maniera combinatoria con cont
  $[256;256]$ & 8 \\ [1ex] 
  \hline
 \end{tabular}
-\caption{Combinatory logarithm.}
+\caption{Logaritmo Combinatorio.}
 \end{table}
 
 \begin{figure}[h!] %%%%     H al posto di h! se dà problemi      %%%%%
   \includegraphics[width=\linewidth]{new_pixel_module}
-  \caption{Functions calculator module.}
+  \caption{Rappresentazione schematica del modulo di calcolo funzioni.}
   \label{fig:newPixel}
 \end{figure}

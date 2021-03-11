@@ -1,49 +1,15 @@
-\paragraph{Row \& Column counter\\}
+\paragraph{Row \& Column counter}
+\paragraph{Address counter}
+\paragraph{Max \& Min calculator.}
+Il modulo Max \& Min calculator permette di trovare i valori massimo e minimo dei pixel presenti nell'immagine.
+Il funzionamento del modulo è semplice. Vengono impiegati due registri: MAX e MIN, nei quali alla fine del calcolo saranno presenti rispettivamente il valore massimo e minimo dei pixel dell'immagine.
+Inizialmente,(con l'ausilio del segnale "init") viene caricato nei registri MAX e MIN il valore del primo pixel dell'immagine. Successivamente, per ogni altro pixel dell'immagine, lo si confronta con i valori contenuti nel registro MAX e MIN e, se il valore del pixel è maggiore del massimo (contenuto in MAX) o minore del minimo (contenuto in MIN), si aggiornano i valori nei due registri.
+Il calcolo termina dopo aver letto e processato l'ultimo pixel dell'immagine.
 
-Il modulo Row \& Column counter è stato ideato con lo scopo di riconoscere la fine dell'immagine da leggere che si trova memorizzata all'interno della RAM.\\
-Memorizzando le dimensioni di larghezza e altezza nei rispettivi registri e utilizzando dei contatori che tengono traccia delle righe e delle colonne per riga già lette è possibile parallelizzare la ricerca della fine dell'immagine con la lettura della stessa.\\
-Così facendo si va a ricreare quello che in programmazione è definito come nested loop:
-
-\begin{lstlisting}[language=Python, caption=nested loop in pseudocode]
-address = 0
-for column in range(column_max):
-    for row in range(row_max):
-        address += 1
-\end{lstlisting}
-La scelta di adottare questa tecnica è stata dettata dall'intenzione di voler modellare un circuito efficiente. Nel caso in cui si fosse deciso di seguire una via più semplice, ovvero l'utilizzo di un moltiplicatore, si sarebbe ottenuto un aumento significativo del critical path diventando un collo di bottiglia per l'intero circuito.\\
-È interessante notare come all'aumentare delle dimensioni dell'immagine è inevitabile che il numero di istruzioni da eseguire sia maggiore: con l'utilizzo di un moltiplicatore si andrebbe inoltre, ad incrementare la durata del clock compromettendo la velocità del circuito, mentre con questo modulo il clock rimane inalterato.\\
-Per migliorare l'efficienza del componente, si è scelto di verificare che le dimensioni dell'immagine da caricare siano diverse da 0 e in caso contrario di segnalare questa anomalia alla FSM che in seguito gestirà in maniera appropriata tale situazione. L'assenza dei comparatori (utilizzati a tale scopo) non preclude il funzionamento corretto del circuito, tuttavia nel caso pessimo si effettuano più di 2\textsuperscript{16} operazioni elementari inutili.
-
-\begin{figure}[h]
-\caption{rappresentazione schematica del contatore di righe}
-\centering
-\includegraphics[scale=0.2]{rows_counter.png}%######ROWS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
-\end{figure}
-\begin{figure}[h]
-\caption{rappresentazione schematica del contatore di colonne}
-\centering
-\includegraphics[scale=0.2]{columns_counter.png} %######COLUMNS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
-\end{figure}
-\paragraph{Address Counter\\}
-
-Il modulo Address Counter è stato sviluppato per richiedere gli indirizzi alla RAM, sia in fase di lettura che in fase di scrittura.\\
-Come si può notare dalla Figure 3 il modulo è principalmente formato da due contatori e da un multiplexer a 4 ingressi. Il multiplexer seleziona quale valore dell'indirizzo o\_address debba essere mandato in uscita:
-\begin{itemize}
-    \item l'ingresso 0 restituisce il valore salvato nell'address register;
-    \item l'ingresso 1 restituisce il valore salvato nell'address2 register;
-    \item l'ingresso 2 restituisce l'indirizzo 0x00, utilizzato per richiedere la larghezza dell'immagine;
-    \item l'ingresso 3 restituisce l'indirizzo 0x01, utilizzato per richiedere l'altezza dell'immagine.
-\end{itemize}
-In fase di lettura viene utilizzato solo address register dove viene memorizzato l'indirizzo del prossimo pixel da leggere, mentre nella fase di scrittura viene sfruttato anche address2 register.\\
-Al termine della fase di lettura, address register contiene già il primo indirizzo dove scrivere il nuovo pixel, mentre address2 register viene inizializzato al valore dell'indirizzo contenente il primo pixel originale, infine viene salvato il valore di address register in un nuovo registro chiamato 'end register'.
-Durante la fase di scrittura i valori di address register e address2 register vengono incrementati in parallelo fino a quando address2 register contiene lo stesso valore di end register, in quanto esso indica che tutti i pixel originali sono già stati letti e quindi trasformati.
-
-\begin{figure}[h]
-\caption{rappresentazione schematica dell'Address Counter}
-\centering
-\includegraphics[scale=0.2]{final_address_calculator_module.png}%######final_address_calculator_module.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
+\begin{figure}[h!] %%%%     H al posto di h! se dà problemi      %%%%%
+  \includegraphics[width=\linewidth]{max_min_module}
+  \caption{Max \& Min calculator module.}
+  \label{fig:maxMin}
 \end{figure}
 
-
-\paragraph{Max \& Min calculator}
 \paragraph{New pixel value}

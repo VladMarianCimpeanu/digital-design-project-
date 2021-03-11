@@ -5,20 +5,32 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage{setspace}
+\usepackage{subcaption}
 
 \title{Relazione}
 \date{09/03/2021}
 \author{Danilo Castiglia, Vlad Cimpeanu}
 
 \begin{document}
+
 \maketitle
 \pagenumbering{gobble}
-\newpage
+
 \pagenumbering{arabic}
 %\setlength{\parskip}{3em} %added in Vlad's version
 
+\begin{figure}[h!] %%%%     H al posto di h! se dà problemi      %%%%%
+\centering
+  \includegraphics[scale = 0.2]{polimi}
+  \label{fig:polimi}
+\end{figure}
+
+\newpage
+
 \section{Introduzione}
 %Insieme
+\input{intro}
+
 \section{Architettura}
 \subsection{Scelte progettuali}
 %Insieme

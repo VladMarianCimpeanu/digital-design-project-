@@ -521,7 +521,7 @@ begin
     -- NEW PIXEL VALUE MODULE --
     
     sub_delta <= max - min;
-    log_in <= '0' & sub_delta  + "000000001";
+    log_in <= ('0' & sub_delta)  + "000000001";
     log_out <= "0000" when log_in = "000000001" else           -- LOGARITHM
                "0001" when log_in = "000000010" or log_in = "000000011" else
                "0010" when log_in >= "000000100" and log_in <= "000000111" else
@@ -530,7 +530,7 @@ begin
                "0101" when log_in >= "000100000" and log_in <= "000111111" else
                "0110" when log_in >= "001000000" and log_in <= "001111111" else
                "0111" when log_in >= "010000000" and log_in <= "011111111" else
-               "1000" when log_in >= "010000000" else 
+               "1000" when log_in >= "100000000" else 
                "XXXX";
     sub_shift <= "1000" - log_out;
     

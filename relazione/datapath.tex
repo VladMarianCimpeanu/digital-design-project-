@@ -4,25 +4,26 @@ Il modulo Row \& Column counter è stato ideato con lo scopo di riconoscere la f
 Memorizzando le dimensioni di larghezza e altezza nei rispettivi registri e utilizzando dei contatori che tengono traccia delle righe e delle colonne per riga già lette è possibile parallelizzare la ricerca della fine dell'immagine con la lettura della stessa.\\
 Così facendo si va a ricreare quello che in programmazione è definito come nested loop:
 
-\begin{lstlisting}[language=Python, caption=nested loop in pseudocode]
+\begin{lstlisting}[language=Python, caption={nested loop in pseudocode},captionpos=b]
 address = 0
 for column in range(column_max):
     for row in range(row_max):
         address += 1
 \end{lstlisting}
+
 La scelta di adottare questa tecnica è stata dettata dall'intenzione di voler modellare un circuito efficiente. Nel caso in cui si fosse deciso di seguire una via più semplice, ovvero l'utilizzo di un moltiplicatore, si sarebbe ottenuto un aumento significativo del critical path diventando un collo di bottiglia per l'intero circuito.\\
 È interessante notare come all'aumentare delle dimensioni dell'immagine è inevitabile che il numero di istruzioni da eseguire sia maggiore: con l'utilizzo di un moltiplicatore si andrebbe inoltre, ad incrementare la durata del clock compromettendo la velocità del circuito, mentre con questo modulo il clock rimane inalterato.\\
 Per migliorare l'efficienza del componente, si è scelto di verificare che le dimensioni dell'immagine da caricare siano diverse da 0 e in caso contrario di segnalare questa anomalia alla FSM che in seguito gestirà in maniera appropriata tale situazione. L'assenza dei comparatori (utilizzati a tale scopo) non preclude il funzionamento corretto del circuito, tuttavia nel caso pessimo si effettuano più di 2\textsuperscript{16} operazioni elementari inutili.
 
-\begin{figure}[h]
-\caption{rappresentazione schematica del contatore di righe}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{rows_counter.png}%######ROWS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
+\caption{rappresentazione schematica del contatore di righe}
 \end{figure}
-\begin{figure}[h]
-\caption{rappresentazione schematica del contatore di colonne}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{columns_counter.png} %######COLUMNS_COUNTER.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
+\caption{rappresentazione schematica del contatore di colonne}
 \end{figure}
 \paragraph{Address Counter\\}
 
@@ -38,14 +39,14 @@ In fase di lettura viene utilizzato solo address register dove viene memorizzato
 Al termine della fase di lettura, address register contiene già il primo indirizzo dove scrivere il nuovo pixel, mentre address2 register viene inizializzato al valore dell'indirizzo contenente il primo pixel originale, infine viene salvato il valore di address register in un nuovo registro chiamato 'end register'.
 Durante la fase di scrittura i valori di address register e address2 register vengono incrementati in parallelo fino a quando address2 register contiene lo stesso valore di end register, in quanto esso indica che tutti i pixel originali sono già stati letti e quindi trasformati.
 
-\begin{figure}[h]
-\caption{rappresentazione schematica dell'Address Counter}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.2]{final_address_calculator_module.png}%######final_address_calculator_module.PNG NEEDED IN THE SAME DIRECTORY TO WORK PROPERLY
+\caption{rappresentazione schematica dell'Address Counter}
 \end{figure}
 
 
-\paragraph{Max \& Min calculator.}
+\paragraph{Max \& Min calculator.\\}
 
 Questo modulo permette di trovare i valori massimo e minimo dei pixel presenti nell'immagine.
 
@@ -61,7 +62,7 @@ Il calcolo termina dopo aver letto e processato l'ultimo pixel dell'immagine.
   \label{fig:maxMin}
 \end{figure}
 
-\paragraph{New pixel value}
+\paragraph{New pixel value\\}
 
 Questo modulo è il cuore dell'algoritmo di equalizzazione di immagini, calcola le seguenti funzioni:
 \doublespacing

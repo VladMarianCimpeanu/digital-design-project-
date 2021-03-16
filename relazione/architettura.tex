@@ -28,3 +28,14 @@ Scrivo in memoria all'indirizzo contenuto in o\_address, il valore del pixel equ
 Aumento poi di 1 sia l'indirizzo contenuto in address che quello contenuto in address2.
 \paragraph{S14}
 Ho terminato la computazione, alzo il segnale o\_done, e resto in questo stato finchè i\_start = 1, quando i\_start = 0, vado nello stato S0 e sono pronto per una nuova computazione.
+
+
+La macchina a stati modellata, a livello concettuale, può essere divisa in due sezioni principali: la sezione di lettura (gestita dagli stati compresi tra S\textsubscript{0} e S\textsubscript{8}) e la sezione di scrittura( gestita dagli stati compresi tra S\textsubscript{9} e S\textsubscript{14}).
+
+S\textsubscript{0} è lo stato di Reset della macchina e quest'ultima rimane in questo stato fino a quando non riceve il segnale 'i\_start' alto, che indica che può iniziare la conversione dell'immagine.
+
+Gli stati S\textsubscript{1}, S\textsubscript{2}, S\textsubscript{3}, S\textsubscript{4}, S\textsubscript{5} si occupano di inizializzare correttamente i vari registri dei moduli precedentemente illustrati, tra cui: c\_max register, r\_max register, max register e min register.
+In caso di dimensioni nulle dell'immagine (segnalate dal row\_counter module o dal column\_counter module rispettivamente tramite i segnali row\_zero e column\_zero), la macchina si sposta nello stato S\textsubscript{14} che viene descritto più nel dettaglio in seguito, altrimenti si sposta nello stato S\textsubscript{6}.
+
+Gli stati S\textsubscript{6}, S\textsubscript{7}, S\textsubscript{8} si occupano di effettuare la lettura corretta dell'immagine e di individuare i valori di massima e minima intensità assunti dai pixel. Più precisamente, gli stati S\textsubscript{6} e S\textsubscript{8} gestiscono il nested loop descritto nella sezione \textbf{Row \& Column counter}, infatti i segnali c\_done e r\_done, una volta posti a '1', segnalano rispettivamente la fine di una riga e la fine dell'immagine.
+

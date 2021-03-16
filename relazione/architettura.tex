@@ -1,1 +1,30 @@
-Ciao
+La scelta di chiamare gli stati con nomi simbolici ($S_i$) piuttosto che utilizzare nomi significativi è stata dettata dal fatto che nella nostra FSM uno stato non svolge singolarmente una funzione specifica; è invece l'unione di più stati che implementa una determinata funzionalità.
+\paragraph{S9}
+La macchina entra in questo stato quando il segnale R\_DONE e quello C\_DONE sono uguali a 1, quando cioè le iterazioni lungo le righe e le colonne sono terminate.
+Il registro Address conterrà allora l'indirizzo del pixel immediatamente successivo all'ultimo pixel dell'immagine. A partire da questo indirzzo verrà salavata l'immagine equalizzata.\\
+Inizializzo il contenuto del registro Address2 con il valore 2, indirizzo del primo pixel dell'immagine da equalizzare.\\
+In questo stato la macchina ha già letto tutti i pixel dell'immagine e ne ha calcolato il valore massimo e minimo, questi ultimi sono disponibili all'interno dei registri Max e Min.\\
+Posso allora calcolare, in maniera combinatoria, il valore di SHIFT\_LEVEL e caricarlo nell'omonimo registro.
+Carico inoltre il valore del registro Address nel registro END\_IMG, quest'ultimo ci tornerà utile in seguito.\\
+\paragraph{Ciclo S10, S11, S12, S13}
+Ogni iterazione di questi 4 stati legge il valore di un pixel dell'immagine da equalizzare, lo processa e lo scrive in memoria all'indirizzo desiderato.
+Per gestire correttamente gli indirizzi avrò bisogno di due registri:
+\begin{itemize}
+    \item Address: contiene l'indirzzo in cui scriverò l'immagine equalizzata.
+    \item Address2: contiene l'indirizzo da cui leggerò l'immagine da equalizzare.
+\end{itemize}
+Questi due registri, sono stati inizializzati nello stato S9, e verranno aggiornati (aumentando l'indirizzo di 1) in parallelo alla fine di ogni iterazione del ciclo.
+Occorrerà ciclare in questi 4 stati finchè tutti i pixel da equalizzare non saranno stati letti, processati e scritti in memoria. Per effettuare questo controllo, mi basta confrontare l'indirizzo contenuto in address2 con l'indirizzo finale dell'immagine, che ho precedentemente salvato in END\_IMG.\\
+Quando questi due indirizzi coincidono, esco dal ciclo e vado nello stato S14.
+Vediamo in dettaglio questi 4 stati:
+\paragraph{S10}
+La macchina chiede alla memoria il valore del pixel da equalizzare, fornendo come o\_address il valore contenuto nel registro address2.
+\paragraph{S11}
+Salvo il valore del pixel da equalizzare nel registro Old.
+\paragraph{S12}
+In questo stato è disponibile in uscita dal registro Old, il valore del pixel da processare, verrà eseguito lo shift di SHIFT\_LEVEL posizioni, e il confronto con 255. Ho così calcolato NEW\_PIXEL\_VALUE, che viene fornito in uscita attraverso o\_data e potrà essere scritto in memoria nel ciclo di clock successivo.
+\paragraph{S13}
+Scrivo in memoria all'indirizzo contenuto in o\_address, il valore del pixel equalizzato calcolato nello stato precedente.\\
+Aumento poi di 1 sia l'indirizzo contenuto in address che quello contenuto in address2.
+\paragraph{S14}
+Ho terminato la computazione, alzo il segnale o\_done, e resto in questo stato finchè i\_start = 1, quando i\_start = 0, vado nello stato S0 e sono pronto per una nuova computazione.

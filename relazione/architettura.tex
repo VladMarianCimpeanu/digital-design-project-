@@ -5,13 +5,13 @@ S\textsubscript{0} è lo stato di Reset della macchina, e quest'ultima, rimane i
 \paragraph{S\textsubscript{1}}
 In questo stato la macchina richiede la lettura del valore in memoria all'indirizzo '0', ovvero il numero di colonne che costituiscono l'immagine.
 \paragraph{S\textsubscript{2}}
-Mentre la macchina si occupa di caricare nel registro column\_max register la dimensione larghezza dell'immagine appena ottenuta dalla memoria, richiede il valore all'indirizzo 1, ovvero il numero di righe che compongono l'immagine. Inoltre, la macchina si occupa di inizializzare address register, row register e column register rispettivamente ai valori '2', '1' e '1', che serviranno a tenere traccia dei pixel letti.
+Mentre la macchina si occupa di caricare nel registro column\_max register la dimensione larghezza dell'immagine appena ottenuta dalla memoria, richiede il valore all'indirizzo 1, ovvero il numero di righe che compongono l'immagine. Inoltre, la macchina si occupa di inizializzare address register, row register e column register rispettivamente ai valori '2', '1' e '1', che serviranno a tenere traccia degli indirizzi letti.
 \paragraph{S\textsubscript{3}}
 In questo stato viene caricata la dimensione altezza dell'immagine all'interno del row\_max register, infine viene richiesta la lettura del primo pixel.
 \paragraph{S\textsubscript{4}}
 La memoria restituisce il valore del primo pixel che viene memorizzato in pixel register.
 \paragraph{S\textsubscript{5}}
-La macchina alza il segnale init che ha lo scopo di inizializzare correttamente i registri max register e min register: in caso di letture consecutive di immagini, il reset della macchina avverrebbe una volta sola, mentre max register e min register andrebbero resettati all'inizio della lettura di ciascuna immagine\footnote{Nel caso in cui il massimo e il minimo dell'immagine precedente fossero rispettivamente maggiore e minore del massimo e del minimo dell'immagine successiva, verrebbero mantenuti i valori precedenti di massimo e minimo.}.
+La macchina alza il segnale init\footnote{Il segnale init è essenziale nel caso di letture successive di immagini, infatti nel caso in cui si inizializzassero i registri max e min solo dopo il reset e, il massimo e il minimo dell'immagine precedente fossero rispettivamente maggiore e minore del massimo e del minimo dell'immagine successiva, verrebbero mantenuti i valori precedenti di massimo e minimo.} che ha lo scopo di inizializzare i registri max register e min register con il valore del primo pixel dell'immagine: questi registri saranno aggiornati correttamente nel ciclo S\textsubscript{6}, S\textsubscript{7}, S\textsubscript{8}.
 Infine, nel caso in cui i segnali zero\_column o zero\_row dovessero valere '1' (ovvero l'immagine ha dimensione nulla), la macchina si sposta nello stato S\textsubscript{14} che verrà spiegato successivamente, altrimenti si sposta nello stato S\textsubscript{6}.
 \paragraph{Ciclo S\textsubscript{6}, S\textsubscript{7}, S\textsubscript{8}}
 Questo ciclo costituisce la fase di lettura, che ha lo scopo di individuare e di memorizzare nei registri max register e min register rispettivamente il valore di intensità massima e minima dell'immagine.\\
@@ -32,19 +32,19 @@ Viene inizializzato il contenuto del registro Address2 con il valore '2', indiri
 %In questo stato la macchina ha già letto tutti i pixel dell'immagine e ne ha calcolato il valore massimo e minimo rendendoli disponibili all'interno dei registri Max e Min.\\
 Avendo precedentemente individuato il massimo e il minimo valore dei pixel, si può calcolare %, in maniera combinatoria ,
 il valore di SHIFT\_LEVEL e caricarlo nell'omonimo registro.
-Infine, viene caricato il valore del registro Address in end register, che tornerà utile in seguito.
+Infine, viene caricato il valore del registro Address in end register, quest'ultimo sarà utile in seguito.
 \paragraph{Ciclo S\textsubscript{10}, S\textsubscript{11}, S\textsubscript{12}, S\textsubscript{13}}
 Ogni iterazione di questi 4 stati legge il valore di un pixel dell'immagine da equalizzare, lo processa e lo scrive in memoria all'indirizzo desiderato.
 Per gestire correttamente gli indirizzi sarà necessario utilizzare due registri:
 \begin{itemize}
-    \item Address: contiene l'indirizzo in cui verrà scritto l'immagine equalizzata. %il nuovo pixel
-    \item Address2: contiene l'indirizzo da cui verrà letta l'immagine da equalizzare. %il pixel originale
+    \item Address: contiene l'indirizzo in cui verrà scritto il pixel dell'immagine equalizzata. %il nuovo pixel
+    \item Address2: contiene l'indirizzo da cui verrà letto il pixel dell'immagine da equalizzare. %il pixel originale
 \end{itemize}
 Questi due registri, sono stati inizializzati nello stato S\textsubscript{9}, e verranno aggiornati (aumentando l'indirizzo di 1) in parallelo alla fine di ogni iterazione del ciclo.
 Occorrerà ciclare in questi 4 stati finché tutti i pixel da equalizzare non saranno stati letti, processati e scritti in memoria. Per effettuare questo controllo, sarà sufficiente confrontare l'indirizzo contenuto in address2 con l'indirizzo finale dell'immagine, precedentemente salvato in end register.\\
 Quando questi due indirizzi coincidono, la macchina esce dal ciclo e va nello stato S\textsubscript{14}. Di seguito vengono descritti nel dettaglio questi 4 stati:
 \paragraph{S\textsubscript{10}}
-La macchina chiede alla memoria il valore del pixel da equalizzare, fornendo come o\_address il valore contenuto nel registro address2.
+La macchina richiede alla memoria il valore del pixel da equalizzare, fornendo come o\_address il valore contenuto nel registro address2.
 \paragraph{S\textsubscript{11}}
 Il valore del pixel da equalizzare viene salvato nel registro Old.
 \paragraph{S\textsubscript{12}}

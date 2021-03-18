@@ -1,7 +1,7 @@
 La scelta di chiamare gli stati con nomi simbolici ($S_i$) piuttosto che utilizzare nomi significativi è stata dettata dal fatto che nella FSM modellata, uno stato non svolge singolarmente una funzione specifica ma è invece l'unione di più stati ad implementare una determinata funzionalità.
 
 \paragraph{S\textsubscript{0}}
-S\textsubscript{0} è lo stato di Reset della macchina, e quest'ultima, rimane in questo stato fino a quando non riceve il segnale 'i\_start' alto, che indica che può iniziare la conversione dell'immagine.
+S\textsubscript{0} è lo stato di Reset della macchina, e quest'ultima, rimane in questo stato fino a quando non riceve il segnale i\_start alto, che indica che può iniziare la conversione dell'immagine.
 \paragraph{S\textsubscript{1}}
 In questo stato la macchina richiede la lettura del valore in memoria all'indirizzo '0', ovvero il numero di colonne che costituiscono l'immagine.
 \paragraph{S\textsubscript{2}}
@@ -17,40 +17,40 @@ Infine, nel caso in cui i segnali zero\_column o zero\_row dovessero valere '1' 
 Questo ciclo costituisce la fase di lettura, che ha lo scopo di individuare e di memorizzare nei registri max register e min register rispettivamente il valore di intensità massima e minima dell'immagine.\\
 Ad ogni iterazione il valore di address register viene aggiornato con l'indirizzo del pixel da richiedere alla RAM.
 \paragraph{S\textsubscript{6}}
-In questo stato viene salvato il valore del pixel richiesto in pixel register e vengono incrementati i valori all'interno di column register e address register. Al termine del ciclo di clock viene verificato che i contenuti di column register e column\_max register siano uguali (C\_DONE = '1'): in caso affermativo, si è appena conclusa la lettura di una riga dell'immagine, di conseguenza la macchina va nello stato S\textsubscript{8}, altrimenti si sposta nello stato S\textsubscript{7}.
+In questo stato viene salvato il valore del pixel richiesto in pixel register e vengono incrementati i valori all'interno di column register e address register. Al termine del ciclo di clock viene verificato che i contenuti di column register e column\_max register siano uguali (c\_done = '1'): in caso affermativo, si è appena conclusa la lettura di una riga dell'immagine, di conseguenza la macchina va nello stato S\textsubscript{8}, altrimenti si sposta nello stato S\textsubscript{7}.
 Essendo stato caricato un nuovo pixel, nel prossimo stato verranno aggiornati i valori di max register e min register.
 \paragraph{S\textsubscript{7}}
 La macchina richiede il pixel in memoria all'indirizzo memorizzato in address register.
 \paragraph{S\textsubscript{8}}
-Viene resettato il column register a '1' per permettere la lettura di una nuova riga, mentre viene incrementato il valore di row register: se row register e row\_max register contengono gli stessi valori (R\_DONE = '1') allora l'immagine è stata letta completamente e la macchina va in S\textsubscript{9}, altrimenti in S\textsubscript{8}.
+Viene resettato il column register a '1' per permettere la lettura di una nuova riga, mentre viene incrementato il valore di row register: se row register e row\_max register contengono gli stessi valori (r\_done = '1') allora l'immagine è stata letta completamente e la macchina va in S\textsubscript{9}, altrimenti in S\textsubscript{8}.
 
 \paragraph{S\textsubscript{9}}
 %La macchina entra in questo stato quando il segnale R\_DONE e quello di C\_DONE sono uguali a 1, quando cioè le iterazioni lungo le righe e le colonne sono terminate.
 %Il registro Address conterrà allora l'indirizzo del pixel immediatamente successivo all'ultimo pixel dell'immagine. A partire da questo indirizzo verrà salvata l'immagine equalizzata.\\
 Al termine del ciclo appena descritto, address register contiene l'indirizzo del pixel immediatamente successivo all'ultimo pixel dell'immagine. A partire da questo indirizzo verrà salvata l'immagine equalizzata.
-Viene inizializzato il contenuto del registro Address2 con il valore '2', indirizzo del primo pixel dell'immagine da equalizzare.\\
+Viene inizializzato il contenuto di address2 register con il valore '2', indirizzo del primo pixel dell'immagine da equalizzare.\\
 %In questo stato la macchina ha già letto tutti i pixel dell'immagine e ne ha calcolato il valore massimo e minimo rendendoli disponibili all'interno dei registri Max e Min.\\
 Avendo precedentemente individuato il massimo e il minimo valore dei pixel, si può calcolare %, in maniera combinatoria ,
 il valore di SHIFT\_LEVEL e caricarlo nell'omonimo registro.
-Infine, viene caricato il valore del registro Address in end register, quest'ultimo sarà utile in seguito.
+Infine, viene caricato il valore di address register in end register, quest'ultimo sarà utile in seguito.
 \paragraph{Ciclo S\textsubscript{10}, S\textsubscript{11}, S\textsubscript{12}, S\textsubscript{13}}
 Ogni iterazione di questi 4 stati legge il valore di un pixel dell'immagine da equalizzare, lo processa e lo scrive in memoria all'indirizzo desiderato.
 Per gestire correttamente gli indirizzi sarà necessario utilizzare due registri:
 \begin{itemize}
-    \item Address: contiene l'indirizzo in cui verrà scritto il pixel dell'immagine equalizzata. %il nuovo pixel
-    \item Address2: contiene l'indirizzo da cui verrà letto il pixel dell'immagine da equalizzare. %il pixel originale
+    \item address: contiene l'indirizzo in cui verrà scritto il pixel dell'immagine equalizzata; %il nuovo pixel
+    \item address2: contiene l'indirizzo da cui verrà letto il pixel dell'immagine da equalizzare. %il pixel originale
 \end{itemize}
 Questi due registri, sono stati inizializzati nello stato S\textsubscript{9}, e verranno aggiornati (aumentando l'indirizzo di 1) in parallelo alla fine di ogni iterazione del ciclo.
-Occorrerà ciclare in questi 4 stati finché tutti i pixel da equalizzare non saranno stati letti, processati e scritti in memoria. Per effettuare questo controllo, sarà sufficiente confrontare l'indirizzo contenuto in address2 con l'indirizzo finale dell'immagine, precedentemente salvato in end register.\\
+Occorrerà ciclare in questi 4 stati finché tutti i pixel da equalizzare non saranno stati letti, processati e scritti in memoria. Per effettuare questo controllo, sarà sufficiente confrontare l'indirizzo contenuto in address2 register con l'indirizzo finale dell'immagine, precedentemente salvato in end register.\\
 Quando questi due indirizzi coincidono, la macchina esce dal ciclo e va nello stato S\textsubscript{14}. Di seguito vengono descritti nel dettaglio questi 4 stati:
 \paragraph{S\textsubscript{10}}
-La macchina richiede alla memoria il valore del pixel da equalizzare, fornendo come o\_address il valore contenuto nel registro address2.
+La macchina richiede alla memoria il valore del pixel da equalizzare, fornendo come o\_address il valore contenuto in address2 register.
 \paragraph{S\textsubscript{11}}
-Il valore del pixel da equalizzare viene salvato nel registro Old.
+Il valore del pixel da equalizzare viene salvato in old register.
 \paragraph{S\textsubscript{12}}
-In questo stato, è disponibile in uscita dal registro Old il valore del pixel da processare: viene eseguito lo shift di SHIFT\_LEVEL posizioni e il confronto con 255. Viene così calcolato NEW\_PIXEL\_VALUE, che è fornito in uscita attraverso o\_data e potrà essere scritto in memoria nel ciclo di clock successivo.
+In questo stato, è disponibile in uscita da old register il valore del pixel da processare: viene eseguito lo shift di SHIFT\_LEVEL posizioni e il confronto con 255. Viene così calcolato NEW\_PIXEL\_VALUE, che è fornito in uscita attraverso o\_data e potrà essere scritto in memoria nel ciclo di clock successivo.
 \paragraph{S\textsubscript{13}}
-Il valore del pixel equalizzato calcolato nello stato precedente, viene scritto in memoria all'indirizzo contenuto in address.\\
-Infine vengono incrementati di 1 sia l'indirizzo contenuto in address che quello contenuto in address2.
+Il valore del pixel equalizzato calcolato nello stato precedente, viene scritto in memoria all'indirizzo contenuto in address register.\\
+Infine vengono incrementati di 1 sia l'indirizzo contenuto in address register che quello contenuto in address2 register.
 \paragraph{S\textsubscript{14}}
-La computazione è terminata e viene alzato il segnale O\_DONE: la macchina rimane in questo stato finché I\_START = '1', quando I\_START commuta, procede nello stato S\textsubscript{0} ed è pronta per una nuova computazione.
+La computazione è terminata e viene alzato il segnale o\_done: la macchina rimane in questo stato finché i\_start = '1', quando i\_start commuta, procede nello stato S\textsubscript{0} ed è pronta per una nuova computazione.

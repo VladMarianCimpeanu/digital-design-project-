@@ -50,8 +50,8 @@ Durante la fase di scrittura i valori di address register e address2 register ve
 \paragraph{Max \& Min calculator\\}
 
 Questo modulo permette di trovare i valori massimo e minimo dei pixel presenti nell'immagine.\\
-Il funzionamento del modulo è semplice. Vengono impiegati due registri: MAX e MIN, nei quali alla fine del calcolo saranno presenti rispettivamente il valore massimo e minimo dei pixel dell'immagine.\\
-Inizialmente,(con l'ausilio del segnale "init") viene caricato nei registri MAX e MIN il valore del primo pixel dell'immagine. Successivamente, per ogni altro pixel dell'immagine, lo si confronta con i valori contenuti nel registro MAX e MIN e, se il valore del pixel è maggiore del massimo (contenuto in MAX) o minore del minimo (contenuto in MIN), si aggiornano i valori nei due registri.\\
+Il funzionamento del modulo è semplice. Vengono impiegati due registri: max register e min register, nei quali alla fine del calcolo saranno presenti rispettivamente il valore massimo e minimo dei pixel dell'immagine.\\
+Inizialmente,(con l'ausilio del segnale "init") viene caricato in max register e min register il valore del primo pixel dell'immagine. Successivamente, per ogni altro pixel dell'immagine, lo si confronta con i valori contenuti nel registro max e min e, se il valore del pixel è maggiore del massimo (contenuto in max) o minore del minimo (contenuto in min), si aggiornano i valori nei due registri.\\
 Il calcolo termina dopo aver letto e processato l'ultimo pixel dell'immagine.
 
 \begin{figure}[h!] %%%%     H al posto di h! se dà problemi      %%%%%

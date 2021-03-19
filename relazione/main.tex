@@ -47,8 +47,37 @@
 \input{architettura}
 \section{Risultati Sperimentali}
 \subsection{Report di sintesi}
+Dal report di sintesi emerge che il modulo è correttamente sintetizzabile e sono stati inferiti 131 Flip Flop e 0 Latch. Il Critical Path limita il clock ad almeno 5.361ns, di conseguenza il constraint di clock imposto da specifica a 100ns è stato rispettato con un ampio margine.
+Con un periodo di clock di 15ns, emerge che il tempo massimo di conversione di un'immagine (128x128) risulta essere di 1.48ms.
 %Insieme
 \subsection{Simulazioni}
+Per verificare la correttezza del nostro modulo sono stati utilizzati dei testbench che si ritiene possano stimolare i corner case.\\
+I testbench di seguito elencati sono stati utilizzati con lo scopo di verificare il corretto funzionamento del ciclo di lettura della FSM:
+\begin{itemize}
+    \item Numero di righe e/o numero di colonne uguali a 1.
+    \item Immagine di dimensione massima (128x128 pixel).
+\end{itemize}
+Per testare invece il modulo di calcolo del logaritmo si è scelto di utilizzare i seguenti tesbench:
+\begin{itemize}
+    \item Immagine bianca (tutti i pixel valgono 255).
+    \item Immagine nera (tutti i pixel valgono 0).
+    \item Immagine monocromatica (tutti i pixel hanno lo stesso valore).
+\end{itemize}
+Sebbene un'immagine non possa avere dimensione nulla, per motivi di robustezza, si è scelto di testare comunque questo caso:
+\begin{itemize}
+    \item Immagini anomale: Numero di righe e/o numero di colonne uguali a 0.
+\end{itemize}
+Per verificare che l'intero sistema si comporti correttamente nel caso di letture successive e nella gestione dei reset:
+\begin{itemize}
+    \item Reset sincroni e asincroni durante l'esecuzione.
+\end{itemize}
+\begin{itemize}
+    \item Lettura sequenziale di più immagini.
+\end{itemize}
+Per verificare che il numero di iterazioni della macchina a stati sia corretto, controllando che anche l'ultimo pixel possa modificare max e min register:
+\begin{itemize}
+    \item 0 o 255 come ultimo pixel.
+\end{itemize}
 %Insieme
 \section{Conclusioni}
 %Insieme

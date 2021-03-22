@@ -12,7 +12,7 @@ In questo stato viene caricata la dimensione altezza dell'immagine all'interno d
 La memoria restituisce il valore del primo pixel che viene memorizzato in pixel register.
 \paragraph{S\textsubscript{5}}
 La macchina alza il segnale init\footnote{Il segnale init è essenziale nel caso di letture successive di immagini, infatti nel caso in cui si inizializzassero i registri max e min solo dopo il reset e, il massimo e il minimo dell'immagine precedente fossero rispettivamente maggiore e minore del massimo e del minimo dell'immagine successiva, verrebbero mantenuti i valori precedenti di massimo e minimo.} che ha lo scopo di inizializzare i registri max register e min register con il valore del primo pixel dell'immagine: questi registri saranno aggiornati correttamente nel ciclo S\textsubscript{6}, S\textsubscript{7}, S\textsubscript{8}.
-Infine, nel caso in cui i segnali zero\_column o zero\_row dovessero valere '1' (ovvero l'immagine ha dimensione nulla), la macchina si sposta nello stato S\textsubscript{14} che verrà spiegato successivamente, altrimenti si sposta nello stato S\textsubscript{6}.
+Infine, nel caso in cui i segnali zero\_column o zero\_row dovessero valere '1' (ovvero l'immagine ha dimensione nulla), la macchina si sposta nello stato S\textsubscript{14}, altrimenti si sposta nello stato S\textsubscript{6}.
 \paragraph{Ciclo S\textsubscript{6}, S\textsubscript{7}, S\textsubscript{8}}
 Questo ciclo costituisce la fase di lettura, che ha lo scopo di individuare e di memorizzare nei registri max register e min register rispettivamente il valore di intensità massima e minima dell'immagine.\\
 Ad ogni iterazione il valore di address register viene aggiornato con l'indirizzo del pixel da richiedere alla RAM.

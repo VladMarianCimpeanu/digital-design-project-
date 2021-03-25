@@ -1,4 +1,7 @@
+Per modellare l'unità di controllo si è deciso di utilizzare una macchina a stati di Moore (rappresentata in Figura 7), in quanto si è valutato che ciascuno stimolo del datapath proveniente dalla macchina a stati è univocamente determinato dallo stato della stessa.\\
 La scelta di chiamare gli stati con nomi simbolici ($S_i$) piuttosto che utilizzare nomi significativi è stata dettata dal fatto che nella FSM modellata, uno stato non svolge singolarmente una funzione specifica ma è invece l'unione di più stati ad implementare una determinata funzionalità.
+
+\newpage
 
 \paragraph{S\textsubscript{0}}
 S\textsubscript{0} è lo stato di Reset della macchina, e quest'ultima, rimane in questo stato fino a quando non riceve il segnale i\_start alto, che indica che può iniziare la conversione dell'immagine.

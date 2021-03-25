@@ -8,9 +8,9 @@
 \usepackage{subcaption}
 \usepackage[bottom]{footmisc}
 
-\title{Relazione}
+\title{Relazione prova finale Reti Logiche}
 \date{09/03/2021}
-\author{Danilo Castiglia, Vlad Cimpeanu}
+\author{Vlad Cimpeanu: 10606922\\ Danilo Castiglia: 10685118}
 
 \begin{document}
 
@@ -35,8 +35,8 @@
 \section{Architettura}
 \subsection{Scelte progettuali}
 %Insieme
+Per la realizzazione di questo progetto si è deciso di dividere \textbf{unità di elaborazione} e \textbf{unità di controllo}, facendo uso di un datapath e di una macchina a stati di Moore. Il datapath utilizza una rete combinatoria per il calcolo dei logaritmi, sommatori, sottrattori, comparatori, multiplexer e registri, con lo scopo di elaborare tutti i calcoli richiesti dalla macchina a stati.
 
-\newpage
 \subsection{Datapath}
 %Vlad: Row, Column, Address
 %Danilo: New_pixel, Max/Min: init ti permette di resettare il valore
@@ -44,9 +44,10 @@
 \subsection{Macchina a Stati}
 %Vlad: S0...S8
 %Danilo: S9...S14
+\input{FSM}
 \input{architettura}
 
-\input{FSM}
+%\input{FSM}
 
 \section{Risultati Sperimentali}
 \subsection{Report di sintesi}
@@ -85,7 +86,9 @@ Per verificare che il numero di iterazioni della macchina a stati sia corretto, 
 \section{Conclusioni}
 %Insieme
 
-a
+Grazie alle scelte effettuate il sistema risulta particolarmente veloce e scalabile, infatti adottando il modulo Row \& Column counter invece che un moltiplicatore, al crescere delle dimensioni dell'immagine, la complessità temporale aumenta linearmente: con l'utilizzo di un moltiplicatore si andrebbe ad incrementare la durata del clock compromettendo la velocità del circuito.\\
+
+
 
 
 \end{document}

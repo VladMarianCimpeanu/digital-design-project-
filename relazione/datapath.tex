@@ -12,7 +12,6 @@ for column in range(column_max):
 \end{lstlisting}
 
 La scelta di adottare questa tecnica è stata dettata dall'intenzione di voler modellare un circuito efficiente. Nel caso in cui si fosse deciso di seguire una via più semplice, ovvero l'utilizzo di un moltiplicatore, si sarebbe ottenuto un aumento significativo del critical path diventando un collo di bottiglia per l'intero circuito.\\
-È interessante notare come all'aumentare delle dimensioni dell'immagine è inevitabile che il numero di istruzioni da eseguire sia maggiore: con l'utilizzo di un moltiplicatore si andrebbe inoltre, ad incrementare la durata del clock compromettendo la velocità del circuito, mentre con questo modulo il clock rimane inalterato.\\
 Per migliorare l'efficienza del componente, si è scelto di verificare che le dimensioni dell'immagine da caricare siano diverse da 0 e in caso contrario di segnalare questa anomalia alla FSM che in seguito gestirà in maniera appropriata tale situazione. L'assenza dei comparatori (utilizzati a tale scopo) non preclude il funzionamento corretto del circuito, tuttavia nel caso pessimo si effettuano più di 2\textsuperscript{16} operazioni elementari inutili.
 
 \begin{figure}[h!]
@@ -29,7 +28,7 @@ Per migliorare l'efficienza del componente, si è scelto di verificare che le di
 \paragraph{Address Counter\\}
 
 Il modulo Address Counter è stato sviluppato per richiedere gli indirizzi alla RAM, sia in fase di lettura che in fase di scrittura.\\
-Come si può notare dalla Figure 3 il modulo è principalmente formato da due contatori e da un multiplexer a 4 ingressi. Il multiplexer seleziona quale valore dell'indirizzo o\_address debba essere mandato in uscita:
+Come si può notare dalla Figura 3 il modulo è principalmente formato da due contatori e da un multiplexer a 4 ingressi. Il multiplexer seleziona quale valore dell'indirizzo o\_address debba essere mandato in uscita:
 \begin{itemize}
     \item l'ingresso 0 restituisce il valore salvato nell'address register;
     \item l'ingresso 1 restituisce il valore salvato nell'address2 register;

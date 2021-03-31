@@ -51,8 +51,7 @@ Per la realizzazione di questo progetto si è deciso di dividere \textbf{unità 
 
 \section{Risultati Sperimentali}
 \subsection{Report di sintesi}
-Dal report di sintesi emerge che il modulo è correttamente sintetizzabile e sono stati inferiti 131 Flip Flop e 0 Latch. Il Critical Path limita il clock ad almeno 5.361ns, di conseguenza il constraint di clock imposto da specifica a 100ns è stato rispettato con un ampio margine.
-Con un periodo di clock di 15ns, emerge che il tempo massimo di conversione di un'immagine (128x128) risulta essere di 1.48ms.
+Dal report di sintesi emerge che il modulo è correttamente sintetizzabile e sono stati inferiti 131 Flip Flop e 0 Latch, mentre il Data Path Delay è di 5.361ns, rispettando il limite di 100ns del constraint di clock.
 %Insieme
 \subsection{Simulazioni}
 Per verificare la correttezza del nostro modulo sono stati utilizzati dei testbench che si ritiene possano stimolare i corner case.\\
@@ -85,10 +84,9 @@ Per verificare che il numero di iterazioni della macchina a stati sia corretto, 
 %Insieme
 \section{Conclusioni}
 %Insieme
-
-Grazie alle scelte effettuate il sistema risulta particolarmente veloce e scalabile, infatti adottando il modulo Row \& Column counter invece che un moltiplicatore, al crescere delle dimensioni dell'immagine, la complessità temporale aumenta linearmente: con l'utilizzo di un moltiplicatore si andrebbe ad incrementare la durata del clock compromettendo la velocità del circuito.\\
-
-
-
+In conclusione l'architettura progettata, oltre a rispettare le specifiche fornite, risulta particolarmente veloce.\\
+Il Critical Path limita il clock ad almeno 5.361ns, di conseguenza il limite imposto da specifica di 100ns è stato rispettato con un ampio margine:
+si può perciò ridurre notevolmente il periodo di clock, ad esempio a 15ns, ottenendo il tempo massimo di conversione di un'immagine (128x128) pari a 1.48ms.\\
+Grazie alle scelte effettuate il sistema risulta inoltre scalabile, infatti adottando il modulo Row \& Column counter invece che un moltiplicatore, al crescere delle dimensioni dell'immagine, la complessità temporale aumenta linearmente: con l'utilizzo di un moltiplicatore si andrebbe anche ad incrementare la durata del clock compromettendo la velocità del circuito.
 
 \end{document}

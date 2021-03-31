@@ -4,11 +4,11 @@ La scelta di chiamare gli stati con nomi simbolici ($S_i$) piuttosto che utilizz
 \newpage
 
 \paragraph{S\textsubscript{0}}
-S\textsubscript{0} è lo stato di Reset della macchina, e quest'ultima, rimane in questo stato fino a quando non riceve il segnale i\_start alto, che indica che può iniziare la conversione dell'immagine.
+È lo stato di Reset della macchina, quest'ultima, rimane in questo stato fino a quando non riceve il segnale i\_start alto, che indica che può iniziare la conversione dell'immagine.
 \paragraph{S\textsubscript{1}}
 In questo stato la macchina richiede la lettura del valore in memoria all'indirizzo '0', ovvero il numero di colonne che costituiscono l'immagine.
 \paragraph{S\textsubscript{2}}
-Mentre la macchina si occupa di caricare nel registro column\_max register la dimensione larghezza dell'immagine appena ottenuta dalla memoria, richiede il valore all'indirizzo 1, ovvero il numero di righe che compongono l'immagine. Inoltre, la macchina si occupa di inizializzare address register, row register e column register rispettivamente ai valori '2', '1' e '1', che serviranno a tenere traccia degli indirizzi letti.
+Mentre la macchina si occupa di caricare nel registro column\_max register la dimensione larghezza dell'immagine appena ottenuta dalla memoria, richiede il valore all'indirizzo '1', ovvero il numero di righe che compongono l'immagine. Inoltre, la macchina si occupa di inizializzare address register, row register e column register rispettivamente ai valori '2', '1' e '1', che serviranno a tenere traccia degli indirizzi letti.
 \paragraph{S\textsubscript{3}}
 In questo stato viene caricata la dimensione altezza dell'immagine all'interno del row\_max register, infine viene richiesta la lettura del primo pixel.
 \paragraph{S\textsubscript{4}}

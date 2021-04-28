@@ -22,10 +22,24 @@ Final grade: 30/30
 ## How to see the equalizer output
 With the python scripts in python directory it is possible to see the equalizer output.
 First, chose an image, for example '\img.png' and run the following command on cmd/bash:
+
+
 `py format_generator.py --file=img.png`
+
+
 This command will convert an image in to the correct format that the equalizer can read, so you will find in the same directory the 'input.txt' file.
+
+
 After that, you can run the equalizer.VHD simulation with the testbench python\testbench.VHD. Once the simulation is ended, it will generate a new file 'testbench_outbut.txt in the directory specified. It is recommended to set the output diorectory the same in which is render.py. Make sure that the read file is 'input.txt.
+
+
 Run the following command:
+
+
 `py render.py`
+
+
 This command will render the output image.
+
+
 Dependencies: in order to run this scripts you should install pillow, click and pygame.

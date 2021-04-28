@@ -1,16 +1,15 @@
 import pygame
 
-FILE_TO_RENDER = 'output_testbench.txt' # change this line to choose which file has to be rendered
-SIZE_WINDOW = 128 * 8
-SIZE_PIXEL = 8
+FILE_TO_RENDER = 'output_testbench.txt'  # --------->change this line to choose which file must be rendered
+SIZE_WINDOW = 128 * 5
+SIZE_PIXEL = 5
 info_img = []
-pixels = []
 isLoaded = True
 run = True
 pygame.init()
 
 window = pygame.display.set_mode((SIZE_WINDOW, SIZE_WINDOW))
-pygame.display.set_caption("INPUT_RENDERED")
+pygame.display.set_caption("Input rendered")
 with open(FILE_TO_RENDER) as reader:
     for line in reader:
         info_img.append(int(line))

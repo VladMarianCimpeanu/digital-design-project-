@@ -21,7 +21,7 @@ Final grade: 30/30
 ---
 ## How to see the equalizer output
 With the python scripts in python directory it is possible to see the equalizer output.
-First, chose an image, for example '\img.png' and run the following command on cmd/bash:
+First, choose an image, for example '\img.png' and run the following command on cmd/bash:
 
 
 `py format_generator.py --file=img.png`
